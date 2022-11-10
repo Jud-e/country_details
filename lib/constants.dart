@@ -1,7 +1,7 @@
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<Details> detailsFromJson(String str) =>
-    List<Details>.from(json.decode(str).map((x) => Details.fromJson(x)));
+Details detailsFromJson(String str) => Details.fromJson(json.decode(str));
 
 String detailsToJson(Details data) => json.encode(data.toJson());
 

@@ -11,7 +11,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  late List<Details>? _userModel = [];
+  List<Details>? _userModel = [];
   @override
   void initState() {
     super.initState();
