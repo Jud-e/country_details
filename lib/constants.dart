@@ -1,9 +1,5 @@
 import 'dart:convert';
 
-class ApiConstants {
-  static String baseUrl = 'https://restcountries.com/v3.1/all';
-}
-
 List<Details> detailsFromJson(String str) =>
     List<Details>.from(json.decode(str).map((x) => Details.fromJson(x)));
 

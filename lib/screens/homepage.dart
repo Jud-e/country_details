@@ -19,7 +19,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _getData() async {
-    _userModel = (await ApiService().getDetails())!.cast<Details>();
+    _userModel = (await ApiService().getDetails());
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -29,36 +29,36 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: Text("hello"),
       ),
-      body: _userModel == null || _userModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: _userModel!.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("${_userModel![index].name}"),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("${_userModel![index].currencies}"),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
+      // body: _userModel == null || _userModel!.isEmpty
+      //     ? const Center(
+      //         child: CircularProgressIndicator(),
+      //       )
+      body: ListView.builder(
+        itemCount: _userModel!.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("${_userModel![index].name}"),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("${_userModel![index].currencies}"),
+                  ],
+                ),
+              ],
             ),
+          );
+        },
+      ),
     );
   }
 }
