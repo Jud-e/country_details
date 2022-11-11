@@ -40,11 +40,23 @@ class _HomepageState extends State<Homepage> {
                 if (snapshot.data == null) {
                   return const Text("List is empty");
                 }
-                return ListView.builder(
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (context, index) {
-                      return Text("${snapshot.data?[index].name?.common}");
-                    });
+                return Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text("Trial"),
+                    ),
+                    Flexible(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            return Text(
+                                "${snapshot.data?[index].name?.common}");
+                          }),
+                    ),
+                  ],
+                );
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
