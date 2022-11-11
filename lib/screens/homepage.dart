@@ -1,7 +1,6 @@
-import 'package:country_details/screens/details.dart';
+import 'package:country_details/model/country_model.dart';
+import 'package:country_details/services/service.dart';
 import 'package:flutter/material.dart';
-import 'package:country_details/apiservice.dart';
-import 'package:country_details/constants.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -11,54 +10,45 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Details>? _userModel = [];
+  late Future<List<CountriesModel>> countries;
+  var isLoaded = false;
+
   @override
   void initState() {
     super.initState();
-    _getData();
+    getData();
   }
 
-  void _getData() async {
-    _userModel = (await ApiService().getDetails());
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  getData() async {
+    countries = Service().getCountries();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("hello"),
-      ),
-      // body: _userModel == null || _userModel!.isEmpty
-      //     ? const Center(
-      //         child: CircularProgressIndicator(),
-      //       )
-      body: ListView.builder(
-        itemCount: _userModel!.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text("${_userModel![index].name}"),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text("${_userModel![index].currencies}"),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Title"),
+          centerTitle: true,
+        ),
+        body: FutureBuilder<List<CountriesModel>>(
+            future: countries,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              }
+              if (snapshot.hasData) {
+                if (snapshot.data == null) {
+                  return const Text("List is empty");
+                }
+                return ListView.builder(
+                    itemCount: snapshot.data?.length,
+                    itemBuilder: (context, index) {
+                      return Text("${snapshot.data?[index].name?.common}");
+                    });
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return const Text("erroe");
+            }));
   }
 }
