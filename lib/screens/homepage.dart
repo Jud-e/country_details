@@ -29,7 +29,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      minimum: EdgeInsets.symmetric(horizontal: 24),
+      minimum: const EdgeInsets.symmetric(horizontal: 24),
       child: FutureBuilder<List<CountriesModel>>(
           future: countries,
           builder: (context, snapshot) {
@@ -58,32 +58,45 @@ class _HomepageState extends State<Homepage> {
                         shrinkWrap: true,
                         itemCount: snapshot.data?.length,
                         itemBuilder: (context, index) {
-                          return Row(
-                            children: [
-                              Image.network(
-                                "${snapshot.data?[index].flags?.png}",
-                                width: 40,
-                                height: 40,
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    "${snapshot.data?[index].name?.common}",
-                                    style: TextStyle(
-                                        fontFamily: "Axiforma",
-                                        fontWeight: FontWeight.w900),
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: SizedBox(
+                                    width: 45,
+                                    height: 40,
+                                    child: Image.network(
+                                      "${snapshot.data?[index].flags?.png}",
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  Text(
-                                    snapshot.data?[index].capital != null
-                                        ? "${snapshot.data?[index].capital[0]}"
-                                        : "",
-                                    style: TextStyle(
-                                        fontFamily: "Axiforma",
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              ),
-                            ],
+                                ),
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${snapshot.data?[index].name?.common}",
+                                      style: const TextStyle(
+                                          fontFamily: "Axiforma",
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                                    Text(
+                                      snapshot.data?[index].capital != null
+                                          ? "${snapshot.data?[index].capital[0]}"
+                                          : "",
+                                      style: const TextStyle(
+                                          fontFamily: "Axiforma",
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           );
                         }),
                   ),
