@@ -14,6 +14,7 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   late Future<List<CountriesModel>> countries;
   var isLoaded = false;
+  final myController = TextEditingController();
 
   @override
   void initState() {
@@ -53,49 +54,62 @@ class _HomepageState extends State<Homepage> {
                       const Icon(CupertinoIcons.sun_max)
                     ],
                   ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: myController,
+                      decoration: const InputDecoration(
+                          iconColor: Colors.grey,
+                          filled: true,
+                          fillColor: Colors.grey,
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          focusedBorder: InputBorder.none,
+                          hintText: "Search Country",
+                          hintStyle: TextStyle(
+                              fontFamily: "Axiforma",
+                              fontWeight: FontWeight.w900)),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("data"),
+                    ],
+                  ),
                   Flexible(
                     child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: snapshot.data?.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: SizedBox(
-                                    width: 45,
-                                    height: 40,
-                                    child: Image.network(
-                                      "${snapshot.data?[index].flags?.png}",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                            padding: const EdgeInsets.all(.0),
+                            child: ListTile(
+                              leading: SizedBox(
+                                width: 45,
+                                height: 40,
+                                child: Image.network(
+                                  "${snapshot.data?[index].flags?.png}",
+                                  fit: BoxFit.cover,
                                 ),
-                                const SizedBox(
-                                  width: 16.0,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${snapshot.data?[index].name?.common}",
-                                      style: const TextStyle(
-                                          fontFamily: "Axiforma",
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                    Text(
-                                      snapshot.data?[index].capital != null
-                                          ? "${snapshot.data?[index].capital[0]}"
-                                          : "",
-                                      style: const TextStyle(
-                                          fontFamily: "Axiforma",
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
-                                ),
-                              ],
+                              ),
+                              title: Text(
+                                "${snapshot.data?[index].name?.common}",
+                                style: const TextStyle(
+                                    fontFamily: "Axiforma",
+                                    fontWeight: FontWeight.w900),
+                              ),
+                              subtitle: Text(
+                                snapshot.data?[index].capital != null
+                                    ? "${snapshot.data?[index].capital[0]}"
+                                    : "",
+                                style: const TextStyle(
+                                    fontFamily: "Axiforma",
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                           );
                         }),
