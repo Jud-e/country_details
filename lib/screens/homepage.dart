@@ -30,7 +30,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      minimum: const EdgeInsets.symmetric(horizontal: 24),
+      minimum: const EdgeInsets.symmetric(horizontal: 20),
       child: FutureBuilder<List<CountriesModel>>(
           future: countries,
           builder: (context, snapshot) {
@@ -72,12 +72,56 @@ class _HomepageState extends State<Homepage> {
                           hintStyle: TextStyle(
                               fontFamily: "Axiforma",
                               fontWeight: FontWeight.w900)),
+                      onChanged: (searchText) {
+                        searchText = searchText.toLowerCase();
+                        setState(() {});
+                      },
                     ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("data"),
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.network_cell),
+                        label: const Text("EN"),
+                        style: const ButtonStyle(),
+                      ),
+                      ElevatedButton.icon(
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    height: 200,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(24.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Filter",
+                                                style: TextStyle(
+                                                    fontFamily: "Axiforma",
+                                                    fontWeight:
+                                                        FontWeight.w900),
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: Icon(Icons.cancel))
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          },
+                          icon: const Icon(Icons.filter),
+                          label: const Text("Filter"))
                     ],
                   ),
                   Flexible(
@@ -86,7 +130,7 @@ class _HomepageState extends State<Homepage> {
                         itemCount: snapshot.data?.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(.0),
+                            padding: const EdgeInsets.all(0),
                             child: ListTile(
                               leading: SizedBox(
                                 width: 45,
@@ -110,6 +154,9 @@ class _HomepageState extends State<Homepage> {
                                     fontFamily: "Axiforma",
                                     fontWeight: FontWeight.w500),
                               ),
+                              onTap: (() {
+                                print("object");
+                              }),
                             ),
                           );
                         }),
