@@ -26,10 +26,6 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Title"),
-          centerTitle: true,
-        ),
         body: FutureBuilder<List<CountriesModel>>(
             future: countries,
             builder: (context, snapshot) {
@@ -43,8 +39,24 @@ class _HomepageState extends State<Homepage> {
                 return Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text("Trial"),
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("data"),
+                            ],
+                          ),
+                          SizedBox(),
+                          Row(),
+                          SizedBox(),
+                          Row(),
+                        ],
+                      ),
                     ),
                     Flexible(
                       child: ListView.builder(
