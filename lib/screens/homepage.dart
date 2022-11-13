@@ -1,8 +1,11 @@
 import 'package:country_details/model/country_model.dart';
+import 'package:country_details/screens/details.dart';
 import 'package:country_details/services/service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../services/widget.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -14,8 +17,10 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   late Future<List<CountriesModel>> countries;
   var isLoaded = false;
-  final myController = TextEditingController();
 
+  String searchParameter = "";
+
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -57,8 +62,13 @@ class _HomepageState extends State<Homepage> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 10.0),
                     child: TextField(
+                      onChanged: ((value) {
+                        setState(() {
+                          searchParameter = _searchController.text;
+                        });
+                      }),
                       textAlign: TextAlign.center,
-                      controller: myController,
+                      controller: _searchController,
                       decoration: const InputDecoration(
                           iconColor: Colors.grey,
                           filled: true,
@@ -72,10 +82,6 @@ class _HomepageState extends State<Homepage> {
                           hintStyle: TextStyle(
                               fontFamily: "Axiforma",
                               fontWeight: FontWeight.w900)),
-                      onChanged: (searchText) {
-                        searchText = searchText.toLowerCase();
-                        setState(() {});
-                      },
                     ),
                   ),
                   Row(
@@ -92,32 +98,7 @@ class _HomepageState extends State<Homepage> {
                             showModalBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return Container(
-                                    height: 200,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(24.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Filter",
-                                                style: TextStyle(
-                                                    fontFamily: "Axiforma",
-                                                    fontWeight:
-                                                        FontWeight.w900),
-                                              ),
-                                              IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(Icons.cancel))
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                  return contains();
                                 });
                           },
                           icon: const Icon(Icons.filter),
@@ -126,9 +107,14 @@ class _HomepageState extends State<Homepage> {
                   ),
                   Flexible(
                     child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data?.length,
-                        itemBuilder: (context, index) {
+                      shrinkWrap: true,
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        if (snapshot.data?[index].name?.common!
+                                .toLowerCase()
+                                .contains(
+                                    _searchController.text.toLowerCase()) ==
+                            true) {
                           return Padding(
                             padding: const EdgeInsets.all(0),
                             child: ListTile(
@@ -155,11 +141,22 @@ class _HomepageState extends State<Homepage> {
                                     fontWeight: FontWeight.w500),
                               ),
                               onTap: (() {
-                                print("object");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CountryDetails(
+                                              index: index,
+                                              countryName: snapshot
+                                                  .data?[index].name?.common!,
+                                            )));
                               }),
                             ),
                           );
-                        }),
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
                   ),
                 ],
               );
