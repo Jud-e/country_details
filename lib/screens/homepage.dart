@@ -87,7 +87,7 @@ class _HomepageState extends State<Homepage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton.icon(
+                      TextButton.icon(
                         onPressed: () {},
                         icon: const Icon(Icons.network_cell),
                         label: const Text("EN"),
@@ -97,8 +97,15 @@ class _HomepageState extends State<Homepage> {
                           onPressed: () {
                             showModalBottomSheet(
                                 context: context,
+                                isScrollControlled: true,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                                ),
                                 builder: (BuildContext context) {
-                                  return contains();
+                                  return Contains();
                                 });
                           },
                           icon: const Icon(Icons.filter),

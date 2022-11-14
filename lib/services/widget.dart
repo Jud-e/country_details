@@ -1,48 +1,131 @@
 import 'package:flutter/material.dart';
 
-final bool value = false;
-List<DropdownMenuItem> items = [
-  DropdownMenuItem(
-      child: CheckboxListTile(
-    title: Text("Africa"),
-    value: value,
-    onChanged: (value) {
-      print("object");
-    },
-  ))
-];
+bool value = false;
+bool showDialog = false;
+List<int> searchList = [];
+List continents = ["Africa", "Europe", "Australia"];
+List values = [1, 2, 3, 4, 5, 6, 7];
 
-class contains extends StatelessWidget {
-  const contains({
+class Contains extends StatefulWidget {
+  const Contains({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<Contains> createState() => _ContainsState();
+}
+
+class _ContainsState extends State<Contains> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Filter",
-                  style: TextStyle(
-                      fontFamily: "Axiforma", fontWeight: FontWeight.w900),
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Wrap(
+        children: [
+          SizedBox(
+            child: Container(
+              width: double.maxFinite,
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
                 ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.cancel))
-              ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Filter",
+                          style: TextStyle(
+                              fontFamily: "Axiforma",
+                              fontWeight: FontWeight.w900),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.cancel))
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Continent",
+                          style: TextStyle(
+                              fontFamily: "Axiforma",
+                              fontWeight: FontWeight.w500),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                showDialog = !showDialog;
+                              });
+                            },
+                            icon: Icon(Icons.keyboard_arrow_down))
+                      ],
+                    ),
+                    Visibility(
+                      visible: showDialog,
+                      child: Column(
+                        children: [
+                          ...List.generate(continents.length, (i) {
+                            return CheckboxListTile(
+                                value: value,
+                                title: Text("${continents[i]}"),
+                                onChanged: ((bool? newValue) {
+                                  setState(() {
+                                    value = newValue!;
+                                  });
+                                }));
+                          })
+                          // ListView.builder(
+                          //     itemCount: 7,
+                          //     itemBuilder: (context, index) {
+                          //       return CheckboxListTile(
+                          //           value: value,
+                          //           title: Text(""),
+                          //           onChanged: ((bool? newValue) {
+                          //             setState(() {
+                          //               value = newValue!;
+                          //             });
+                          //           }));
+                          //     })
+                        ],
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Timezone",
+                          style: TextStyle(
+                              fontFamily: "Axiforma",
+                              fontWeight: FontWeight.w500),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.keyboard_arrow_down))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
-            // DropdownButton(items: items, onChanged: (){})
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
