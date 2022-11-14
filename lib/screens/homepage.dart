@@ -59,30 +59,25 @@ class _HomepageState extends State<Homepage> {
                       const Icon(CupertinoIcons.sun_max)
                     ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: TextField(
-                      onChanged: ((value) {
-                        setState(() {
-                          searchParameter = _searchController.text;
-                        });
-                      }),
-                      textAlign: TextAlign.center,
-                      controller: _searchController,
-                      decoration: const InputDecoration(
-                          iconColor: Colors.grey,
-                          filled: true,
-                          fillColor: Colors.grey,
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                          focusedBorder: InputBorder.none,
-                          hintText: "Search Country",
-                          hintStyle: TextStyle(
-                              fontFamily: "Axiforma",
-                              fontWeight: FontWeight.w900)),
+                  const SizedBox(height: 24),
+                  TextField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        searchParameter = _searchController.text;
+                      });
+                    },
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      prefixIcon: Icon(
+                        Icons.search,
+                      ),
+                      hintText: "Search Country",
                     ),
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
