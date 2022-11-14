@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 bool value = false;
 bool showDialog = false;
 List<int> searchList = [];
-List continents = ["Africa", "Europe", "Australia"];
-List values = [1, 2, 3, 4, 5, 6, 7];
+List continents = [
+  "Africa",
+  "Europe",
+  "Australia",
+  "Asia",
+  "South America",
+  "North America",
+  "Antartica"
+];
+List values = [false, false, false, false, false, false, false];
 
 class Contains extends StatefulWidget {
   const Contains({
@@ -81,26 +89,14 @@ class _ContainsState extends State<Contains> {
                         children: [
                           ...List.generate(continents.length, (i) {
                             return CheckboxListTile(
-                                value: value,
+                                value: values[i],
                                 title: Text("${continents[i]}"),
                                 onChanged: ((bool? newValue) {
                                   setState(() {
-                                    value = newValue!;
+                                    values[i] = newValue!;
                                   });
                                 }));
                           })
-                          // ListView.builder(
-                          //     itemCount: 7,
-                          //     itemBuilder: (context, index) {
-                          //       return CheckboxListTile(
-                          //           value: value,
-                          //           title: Text(""),
-                          //           onChanged: ((bool? newValue) {
-                          //             setState(() {
-                          //               value = newValue!;
-                          //             });
-                          //           }));
-                          //     })
                         ],
                       ),
                     ),
