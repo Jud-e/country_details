@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 bool value = false;
 bool showDialog = false;
 List searchList = [];
+List countries = [];
 List continents = [
   "Africa",
   "Europe",
-  "Australia",
+  "Oceania",
   "Asia",
   "South America",
   "North America",
@@ -138,7 +138,10 @@ class _ContainsState extends State<Contains> {
                               },
                               child: const Text("Reset")),
                           ElevatedButton(
-                              onPressed: () {}, child: Text("Show Results"))
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              child: Text("Show Results"))
                         ],
                       )
                     ],

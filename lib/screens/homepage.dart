@@ -39,13 +39,15 @@ class _HomepageState extends State<Homepage> {
       child: FutureBuilder<List<CountriesModel>>(
           future: countries,
           builder: (context, snapshot) {
+            var trial = snapshot.data;
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
-              if (snapshot.data == null) {
+              if (trial == null) {
                 return const Text("List is empty");
               }
+
               return Column(
                 children: [
                   Row(
@@ -101,7 +103,75 @@ class _HomepageState extends State<Homepage> {
                                 ),
                                 builder: (BuildContext context) {
                                   return const Contains();
-                                });
+                                }).then((value) => setState(
+                                  () {
+                                    final filter = trial
+                                        .where((country) => trial.any(
+                                            (regionSelected) =>
+                                                // ignore: unrelated_type_equality_checks
+                                                country.region ==
+                                                regionSelected))
+                                        .toList();
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: filter.length,
+                                        itemBuilder: (context, index) {
+                                          if (trial[index]
+                                                  .name
+                                                  ?.common!
+                                                  .toLowerCase()
+                                                  .contains(_searchController
+                                                      .text
+                                                      .toLowerCase()) ==
+                                              true) {
+                                            return Padding(
+                                              padding: const EdgeInsets.all(0),
+                                              child: ListTile(
+                                                leading: SizedBox(
+                                                  width: 45,
+                                                  height: 40,
+                                                  child: Image.network(
+                                                    "${filter[index].flags?.png}",
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                title: Text(
+                                                  "${filter[index].name?.common}",
+                                                  style: const TextStyle(
+                                                      fontFamily: "Axiforma",
+                                                      fontWeight:
+                                                          FontWeight.w900),
+                                                ),
+                                                subtitle: Text(
+                                                  filter[index].capital != null
+                                                      ? "${trial[index].capital[0]}"
+                                                      : "",
+                                                  style: const TextStyle(
+                                                      fontFamily: "Axiforma",
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                ),
+                                                onTap: (() {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              CountryDetails(
+                                                                index: index,
+                                                                countryName:
+                                                                    filter[index]
+                                                                        .name
+                                                                        ?.common!,
+                                                              )));
+                                                }),
+                                              ),
+                                            );
+                                          } else {
+                                            return Container();
+                                          }
+                                        });
+                                  },
+                                ));
                           },
                           icon: const Icon(Icons.filter),
                           label: const Text("Filter"))
@@ -110,12 +180,10 @@ class _HomepageState extends State<Homepage> {
                   Flexible(
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: snapshot.data?.length,
+                      itemCount: trial.length,
                       itemBuilder: (context, index) {
-                        if (snapshot.data?[index].name?.common!
-                                .toLowerCase()
-                                .contains(
-                                    _searchController.text.toLowerCase()) ==
+                        if (trial[index].name?.common!.toLowerCase().contains(
+                                _searchController.text.toLowerCase()) ==
                             true) {
                           return Padding(
                             padding: const EdgeInsets.all(0),
@@ -124,19 +192,19 @@ class _HomepageState extends State<Homepage> {
                                 width: 45,
                                 height: 40,
                                 child: Image.network(
-                                  "${snapshot.data?[index].flags?.png}",
+                                  "${trial[index].flags?.png}",
                                   fit: BoxFit.cover,
                                 ),
                               ),
                               title: Text(
-                                "${snapshot.data?[index].name?.common}",
+                                "${trial[index].name?.common}",
                                 style: const TextStyle(
                                     fontFamily: "Axiforma",
                                     fontWeight: FontWeight.w900),
                               ),
                               subtitle: Text(
-                                snapshot.data?[index].capital != null
-                                    ? "${snapshot.data?[index].capital[0]}"
+                                trial[index].capital != null
+                                    ? "${trial[index].capital[0]}"
                                     : "",
                                 style: const TextStyle(
                                     fontFamily: "Axiforma",
@@ -148,8 +216,8 @@ class _HomepageState extends State<Homepage> {
                                     MaterialPageRoute(
                                         builder: (context) => CountryDetails(
                                               index: index,
-                                              countryName: snapshot
-                                                  .data?[index].name?.common!,
+                                              countryName:
+                                                  trial[index].name?.common!,
                                             )));
                               }),
                             ),
