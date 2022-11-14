@@ -52,7 +52,7 @@ class _ContainsState extends State<Contains> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Filter",
                           style: TextStyle(
                               fontFamily: "Axiforma",
@@ -62,13 +62,13 @@ class _ContainsState extends State<Contains> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.cancel))
+                            icon: const Icon(Icons.cancel))
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Continent",
                           style: TextStyle(
                               fontFamily: "Axiforma",
@@ -80,7 +80,7 @@ class _ContainsState extends State<Contains> {
                                 showDialog = !showDialog;
                               });
                             },
-                            icon: Icon(Icons.keyboard_arrow_down))
+                            icon: const Icon(Icons.keyboard_arrow_down))
                       ],
                     ),
                     Visibility(
@@ -103,7 +103,7 @@ class _ContainsState extends State<Contains> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Timezone",
                           style: TextStyle(
                               fontFamily: "Axiforma",
@@ -113,7 +113,7 @@ class _ContainsState extends State<Contains> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.keyboard_arrow_down))
+                            icon: const Icon(Icons.keyboard_arrow_down))
                       ],
                     ),
                   ],

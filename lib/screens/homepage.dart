@@ -98,14 +98,14 @@ class _HomepageState extends State<Homepage> {
                             showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
-                                shape: RoundedRectangleBorder(
+                                shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(10),
                                     topRight: Radius.circular(10),
                                   ),
                                 ),
                                 builder: (BuildContext context) {
-                                  return Contains();
+                                  return const Contains();
                                 });
                           },
                           icon: const Icon(Icons.filter),
