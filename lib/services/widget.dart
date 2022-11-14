@@ -43,6 +43,7 @@ class _ContainsState extends State<Contains> {
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
@@ -126,23 +127,43 @@ class _ContainsState extends State<Contains> {
                               icon: const Icon(Icons.keyboard_arrow_down))
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                for (var i = 0; i < values.length; i++) {
-                                  values[i] = false;
-                                  searchList = [];
-                                }
-                              },
-                              child: const Text("Reset")),
-                          ElevatedButton(
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              child: Text("Show Results"))
-                        ],
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(
+                                flex: 2,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.transparent),
+                                  onPressed: () {
+                                    for (var i = 0; i < values.length; i++) {
+                                      values[i] = false;
+                                      searchList = [];
+                                    }
+                                  },
+                                  child: const Text("Reset",
+                                      style: TextStyle(
+                                          fontFamily: "Axiforma",
+                                          fontWeight: FontWeight.w500)),
+                                )),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                flex: 5,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.orange),
+                                  onPressed: () {},
+                                  child: Text("Show Results",
+                                      style: TextStyle(
+                                          fontFamily: "Axiforma",
+                                          fontWeight: FontWeight.w500)),
+                                ))
+                          ],
+                        ),
                       )
                     ],
                   ),

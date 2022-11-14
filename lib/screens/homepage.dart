@@ -4,7 +4,7 @@ import 'package:country_details/services/service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:get/get.dart';
 import '../services/widget.dart';
 
 class Homepage extends StatefulWidget {
@@ -41,7 +41,7 @@ class _HomepageState extends State<Homepage> {
           builder: (context, snapshot) {
             var trial = snapshot.data;
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return Center(child: const CircularProgressIndicator());
             }
             if (snapshot.hasData) {
               if (trial == null) {
@@ -58,7 +58,13 @@ class _HomepageState extends State<Homepage> {
                         style: GoogleFonts.elsieSwashCaps(
                             fontSize: 30, fontWeight: FontWeight.w700),
                       ),
-                      const Icon(CupertinoIcons.sun_max)
+                      IconButton(
+                          icon: const Icon(Icons.lightbulb),
+                          onPressed: () {
+                            Get.isDarkMode
+                                ? Get.changeTheme(Theme.of(context))
+                                : Get.changeTheme(ThemeData.dark());
+                          })
                     ],
                   ),
                   const SizedBox(height: 24),
@@ -84,13 +90,13 @@ class _HomepageState extends State<Homepage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton.icon(
+                      OutlinedButton.icon(
                         onPressed: () {},
-                        icon: const Icon(Icons.network_cell),
+                        icon: const Icon(CupertinoIcons.globe),
                         label: const Text("EN"),
                         style: const ButtonStyle(),
                       ),
-                      ElevatedButton.icon(
+                      OutlinedButton.icon(
                           onPressed: () {
                             showModalBottomSheet(
                                 context: context,
@@ -173,7 +179,7 @@ class _HomepageState extends State<Homepage> {
                                   },
                                 ));
                           },
-                          icon: const Icon(Icons.filter),
+                          icon: const Icon(CupertinoIcons.color_filter),
                           label: const Text("Filter"))
                     ],
                   ),

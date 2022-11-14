@@ -116,6 +116,18 @@ class _CountryDetailsState extends State<CountryDetails> {
                         field: "Official Language",
                         jsonLocation:
                             "${snapshot.data?[widget.index].languages!.ara}"),
+                    CountryDetailRow(
+                        field: "Time",
+                        jsonLocation:
+                            "${snapshot.data?[widget.index].timezones[0]}"),
+                    CountryDetailRow(
+                        field: "Currency",
+                        jsonLocation:
+                            "${snapshot.data?[widget.index].currencies?.mRU}"),
+                    CountryDetailRow(
+                        field: "Driving Side",
+                        jsonLocation:
+                            "${snapshot.data?[widget.index].car!.side}"),
                     // CountryDetailRow(field: "Religion", jsonLocation: "${snapshot.data?[widget.index].}")
                   ],
                 );

@@ -1,6 +1,7 @@
 import 'package:country_details/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,13 +9,17 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+  static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.light);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       home: const Homepage(),
+      themeMode: ThemeMode.system,
       darkTheme: ThemeData(
           appBarTheme: AppBarTheme(
               backgroundColor: HexColor("#000F24"),
